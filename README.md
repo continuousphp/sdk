@@ -1,6 +1,6 @@
 # continuousphp SDK
 
-[![Build Status](https://status.continuousphp.com/git-hub/continuousphp/phing-tasks?token=bb175a86-acb5-4f62-92b5-86d5900b6971)](https://continuousphp.com/git-hub/continuousphp/phing-tasks)
+[![Build Status](https://status.continuousphp.com/git-hub/continuousphp/sdk?token=9800bb61-98f2-447d-a331-025f0b9af298)](https://continuousphp.com/git-hub/continuousphp/sdk)
 
 continuousphp SDK enables PHP developers to use [continuousphp](https://continuousphp.com/) in their PHP code.
 
