@@ -51,7 +51,10 @@ class SdkContext implements Context, SnippetAcceptingContext
      */
     public function iVeInstatiatedTheSdkWithTheFollowing(TableNode $table)
     {
-        $config = array_column($table->getTable(), 1, 0);
+        $config = [];
+        foreach ($table->getTable() as $row) {
+            $config[$row[0]] = $row[1];
+        }
         $this->sdk = Service::factory($config);
     }
 
@@ -60,10 +63,11 @@ class SdkContext implements Context, SnippetAcceptingContext
      */
     public function iAccessTheOperation($operation, TableNode $table = null)
     {
+        $args = [];
         if ($table) {
-            $args = array_column($table->getTable(), 1, 0);
-        } else {
-            $args = [];
+            foreach ($table->getTable() as $row) {
+                $args[$row[0]] = $row[1];
+            };
         }
         
         $this->result = call_user_func([$this->sdk, $operation], $args);
