@@ -84,8 +84,7 @@ class Service
                         ],
                         'ref' => [
                             'type' => 'string',
-                            'location' => 'query',
-                            'filters' => ['urlencode']
+                            'location' => 'query'
                         ]
                     ]
                 ],

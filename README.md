@@ -37,5 +37,5 @@ $package = $service->getPackage([
     'buildId' => $project['_embedded']['builds'][0]['buildId'],
     'packageType' => 'deploy'
 ]);
-$url = $package['url’];
+$url = $package['url'];
 ```
