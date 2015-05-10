@@ -26,7 +26,7 @@ $service = Continuous\Sdk\Service::factory(['token' => 'cc2efee7-be03-4611-923e-
 // Get the build list for a specific branch
 $project = $service->getBuilds([
     'projectId' => 'git-hub/continuousphp/sdk',
-    'ref' => '/refs/heads/master',
+    'ref' => 'refs/heads/master',
     'state' => ['complete'],
     'result' => ['success', 'warning']
 ]);
