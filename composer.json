@@ -1,0 +1,34 @@
+{
+  "name": "continuousphp/sdk",
+  "homepage": "https://github.com/continuousphp/sdk",
+  "description": "PHP SDK to consume continuousphp API",
+  "type": "library",
+  "keywords": ["build", "tool", "continuousphp"],
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "Frederic Dewinne",
+      "email": "frederic@continuousphp.com"
+    }
+  ],
+  "require-dev": {
+    "phpunit/phpunit": "^4.6",
+    "squizlabs/php_codesniffer": "^2.3",
+    "behat/behat": "^3.0"
+  },
+  "require": {
+    "php": ">=5.4.0",
+    "guzzlehttp/guzzle-services": "~0.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Continuous\\Sdk\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Continuous\\Tests\\Sdk\\": "tests/",
+      "Continuous\\Features\\": "features/bootstrap/"
+    }
+  }
+}
