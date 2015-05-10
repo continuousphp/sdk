@@ -78,5 +78,4 @@ class SdkContext implements Context, SnippetAcceptingContext
         \PHPUnit_Framework_Assert::assertArrayHasKey('_embedded', $this->result);
         \PHPUnit_Framework_Assert::assertArrayHasKey($type . 's', $this->result['_embedded']);
     }
-
 }

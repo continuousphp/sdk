@@ -10,6 +10,7 @@
  */
 
 namespace Continuous\Sdk;
+
 use GuzzleHttp\Client;
 use GuzzleHttp\Command\Guzzle\Description;
 use Continuous\Sdk\Client as ContinuousClient;
