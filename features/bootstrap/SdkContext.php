@@ -60,9 +60,11 @@ class SdkContext implements Context, SnippetAcceptingContext
 
     /**
      * @When I call the :operation operation
+     * @When I call the :operation operation with
      */
-    public function iAccessTheOperation($operation, TableNode $table = null)
+    public function iCallTheOperation($operation, TableNode $table = null)
     {
+        $this->result = null;
         $args = [];
         if ($table) {
             foreach ($table->getTable() as $row) {
@@ -81,5 +83,33 @@ class SdkContext implements Context, SnippetAcceptingContext
         \PHPUnit_Framework_Assert::assertInternalType('array', $this->result);
         \PHPUnit_Framework_Assert::assertArrayHasKey('_embedded', $this->result);
         \PHPUnit_Framework_Assert::assertArrayHasKey($type . 's', $this->result['_embedded']);
+    }
+
+    /**
+     * @Then The response should be a :type resource
+     */
+    public function theResponseShouldBeAResource($type)
+    {
+        \PHPUnit_Framework_Assert::assertInternalType('array', $this->result);
+        \PHPUnit_Framework_Assert::assertArrayHasKey($type . 'Id', $this->result);
+    }
+    
+    /**
+     * @Then The response should contain a :key
+     */
+    public function theResponseShouldContainA($key)
+    {
+        \PHPUnit_Framework_Assert::assertInternalType('array', $this->result);
+        \PHPUnit_Framework_Assert::assertArrayHasKey($key, $this->result);
+        \PHPUnit_Framework_Assert::assertNotEmpty($this->result[$key]);
+    }
+    
+    /**
+     * @Then The :key file should exists
+     */
+    public function theFileShouldExists($key)
+    {
+        \PHPUnit_Framework_Assert::assertFileExists($this->result[$key]);
+        unlink($this->result[$key]);
     }
 }

@@ -25,7 +25,8 @@ $service = Continuous\Sdk\Service::factory(['token' => 'cc2efee7-be03-4611-923e-
 
 // Get the build list for a specific branch
 $project = $service->getBuilds([
-    'projectId' => 'git-hub/continuousphp/sdk',
+    'provider' => 'git-hub',
+    'repository' => 'continuousphp/sdk',
     'ref' => 'refs/heads/master',
     'state' => ['complete'],
     'result' => ['success', 'warning']
@@ -33,9 +34,21 @@ $project = $service->getBuilds([
 
 // Get the package download url of the last build
 $package = $service->getPackage([
-    'projectId' => 'git-hub/continuousphp/sdk',
+    'provider' => 'git-hub',
+    'repository' => 'continuousphp/sdk',
     'buildId' => $project['_embedded']['builds'][0]['buildId'],
     'packageType' => 'deploy'
 ]);
 $url = $package['url'];
+```
+
+// Download the package of the last build
+$package = $service->downloadPackage([
+    'provider' => 'git-hub',
+    'repository' => 'continuousphp/sdk',
+    'buildId' => $project['_embedded']['builds'][0]['buildId'],
+    'packageType' => 'deploy',
+    'destination' => '/tmp'
+]);
+$packagePath = $package['path'];
 ```

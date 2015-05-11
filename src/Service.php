@@ -31,17 +31,9 @@ class Service
      */
     public static function factory(array $config = array(), array $globalParameters = array())
     {
-        if (isset($config['token'])) {
-            $token = $config['token'];
-        } else {
-            throw new \InvalidArgumentException('API Token not provided');
-        }
-        
         $httpClient = new Client([
             'defaults' => [
-                'query' => [
-                    'token' => $token
-                ],
+                'query' => $config ?: [],
                 'headers' => [
                     'Accept' => 'application/hal+json'
                 ]
@@ -57,10 +49,15 @@ class Service
                 ],
                 'getProject' => [
                     'httpMethod' => 'GET',
-                    'uri' => '/api/projects/{projectId}',
+                    'uri' => '/api/projects/{provider}%2F{repository}',
                     'responseModel' => 'project',
                     'parameters' => [
-                        'projectId' => [
+                        'provider' => [
+                            'type' => 'string',
+                            'location' => 'uri',
+                            'required' => true
+                        ],
+                        'repository' => [
                             'type' => 'string',
                             'location' => 'uri',
                             'required' => true
@@ -69,7 +66,7 @@ class Service
                 ],
                 'getBuilds' => [
                     'extends' => 'getProject',
-                    'uri' => '/api/projects/{projectId}/builds',
+                    'uri' => '/api/projects/{provider}%2F{repository}/builds',
                     'responseModel' => 'buildCollection',
                     'parameters' => [
                         'state' => [
@@ -90,7 +87,7 @@ class Service
                 ],
                 'getBuild' => [
                     'extends' => 'getProject',
-                    'uri' => '/api/projects/{projectId}/builds/{buildId}',
+                    'uri' => '/api/projects/{provider}%2F{repository}/builds/{buildId}',
                     'responseModel' => 'build',
                     'parameters' => [
                         'buildId' => [
@@ -102,13 +99,14 @@ class Service
                 ],
                 'getPackage' => [
                     'extends' => 'getBuild',
-                    'uri' => '/api/projects/{projectId}/builds/{buildId}/packages/{packageType}',
+                    'uri' => '/api/projects/{provider}%2F{repository}/builds/{buildId}/packages/{packageType}',
                     'responseModel' => 'build',
                     'parameters' => [
                         'packageType' => [
                             'type' => 'string',
                             'location' => 'uri',
-                            'required' => true
+                            'required' => true,
+                            'enum' => ['deploy', 'test']
                         ]
                     ]
                 ]

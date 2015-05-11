@@ -12,6 +12,7 @@
 namespace Continuous\Sdk;
 
 use GuzzleHttp\Command\Guzzle\GuzzleClient;
+use GuzzleHttp\Stream\Stream;
 
 /**
  * Service
@@ -27,5 +28,27 @@ use GuzzleHttp\Command\Guzzle\GuzzleClient;
  */
 class Client extends GuzzleClient
 {
-
+    /**
+     * @param array $args
+     * @return array
+     */
+    public function downloadPackage($args = array())
+    {
+        if (empty($args['destination'])) {
+            throw new \InvalidArgumentException("destination argument is not provided");
+        }
+        $destination = $args['destination'];
+        
+        unset($args['destination']);
+        $package = $this->getPackage($args);
+        
+        $url = $package['url'];
+        $path = $destination . '/' . pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_BASENAME);
+        
+        $original = Stream::factory(fopen($url, 'r'));
+        $local = Stream::factory(fopen($path, 'w'));
+        $local->write($original->getContents());
+        
+        return ['path' => $path];
+    }
 }
