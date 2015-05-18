@@ -24,126 +24,65 @@ use Continuous\Sdk\Client as ContinuousClient;
  */
 class Service
 {
+    protected static $httpClientClass;
+
+    /**
+     * @return string
+     */
+    public static function getHttpClientClass()
+    {
+        if (empty(self::$httpClientClass)) {
+            self::setHttpClientClass('GuzzleHttp\Client');
+        }
+        
+        return self::$httpClientClass;
+    }
+
+    /**
+     * @param string $httpClientClass
+     */
+    public static function setHttpClientClass($httpClientClass)
+    {
+        if (!in_array('GuzzleHttp\ClientInterface', class_implements($httpClientClass))) {
+            throw new \InvalidArgumentException("$httpClientClass does not implement GuzzleHttp\\ClientInterface");
+        }
+        
+        self::$httpClientClass = $httpClientClass;
+    }
+    
     /**
      * @param array $config
-     * @param array $globalParameters
-     * @return ContinuousClient
+     * @return \GuzzleHttp\ClientInterface
      */
-    public static function factory(array $config = array(), array $globalParameters = array())
+    public static function getHttpClient(array $config = array())
     {
-        $httpClient = new Client([
+        $className = self::getHttpClientClass();
+        
+        $args = [
             'defaults' => [
-                'query' => $config ?: [],
+                'query' => [],
                 'headers' => [
                     'Accept' => 'application/hal+json'
                 ]
             ]
-        ]);
-        $description = new Description([
-            'baseUrl' => 'https://api.continuousphp.com/',
-            'operations' => [
-                'getProjects' => [
-                    'httpMethod' => 'GET',
-                    'uri' => '/api/projects',
-                    'responseModel' => 'projectCollection'
-                ],
-                'getProject' => [
-                    'httpMethod' => 'GET',
-                    'uri' => '/api/projects/{provider}%2F{repository}',
-                    'responseModel' => 'project',
-                    'parameters' => [
-                        'provider' => [
-                            'type' => 'string',
-                            'location' => 'uri',
-                            'required' => true
-                        ],
-                        'repository' => [
-                            'type' => 'string',
-                            'location' => 'uri',
-                            'required' => true
-                        ]
-                    ]
-                ],
-                'getBuilds' => [
-                    'extends' => 'getProject',
-                    'uri' => '/api/projects/{provider}%2F{repository}/builds',
-                    'responseModel' => 'buildCollection',
-                    'parameters' => [
-                        'state' => [
-                            'type' => 'array',
-                            'location' => 'query',
-                            'enum' => ['in-progress', 'complete', 'timeout']
-                        ],
-                        'result' => [
-                            'type' => 'array',
-                            'location' => 'query',
-                            'enum' => ['success', 'warning', 'failed']
-                        ],
-                        'ref' => [
-                            'type' => 'string',
-                            'location' => 'query'
-                        ]
-                    ]
-                ],
-                'getBuild' => [
-                    'extends' => 'getProject',
-                    'uri' => '/api/projects/{provider}%2F{repository}/builds/{buildId}',
-                    'responseModel' => 'build',
-                    'parameters' => [
-                        'buildId' => [
-                            'type' => 'string',
-                            'location' => 'uri',
-                            'required' => true
-                        ]
-                    ]
-                ],
-                'getPackage' => [
-                    'extends' => 'getBuild',
-                    'uri' => '/api/projects/{provider}%2F{repository}/builds/{buildId}/packages/{packageType}',
-                    'responseModel' => 'build',
-                    'parameters' => [
-                        'packageType' => [
-                            'type' => 'string',
-                            'location' => 'uri',
-                            'required' => true,
-                            'enum' => ['deploy', 'test']
-                        ]
-                    ]
-                ]
-            ],
-            'models' => [
-                'projectCollection' => [
-                    'type' => 'object',
-                    'additionalProperties' => [
-                        'location' => 'json'
-                    ]
-                ],
-                'buildCollection' => [
-                    'type' => 'object',
-                    'additionalProperties' => [
-                        'location' => 'json'
-                    ]
-                ],
-                'project' => [
-                    'type' => 'object',
-                    'additionalProperties' => [
-                        'location' => 'json'
-                    ]
-                ],
-                'build' => [
-                    'type' => 'object',
-                    'additionalProperties' => [
-                        'location' => 'json'
-                    ]
-                ],
-                'package' => [
-                    'type' => 'object',
-                    'additionalProperties' => [
-                        'location' => 'json'
-                    ]
-                ],
-            ]
-        ]);
+        ];
+        
+        if (isset($config['token'])) {
+            $args['defaults']['query']['token'] = $config['token'];
+        }
+        
+        return new $className($args);
+    }
+    
+    /**
+     * @param array $config
+     * @return ContinuousClient
+     */
+    public static function factory(array $config = [])
+    {
+        $httpClient = self::getHttpClient($config);
+        
+        $description = new Description(include __DIR__ . '/../config/description.php');
         
         return new ContinuousClient($httpClient, $description);
     }
