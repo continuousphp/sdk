@@ -11,8 +11,6 @@
 
 namespace Continuous\Sdk;
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Command\Guzzle\Description;
 use Continuous\Sdk\Client as ContinuousClient;
 
 /**
@@ -24,7 +22,15 @@ use Continuous\Sdk\Client as ContinuousClient;
  */
 class Service
 {
+    /**
+     * @var string
+     */
     protected static $httpClientClass;
+    
+    /**
+     * @var string
+     */
+    protected static $descriptionClass;
 
     /**
      * @return string
@@ -73,6 +79,41 @@ class Service
         
         return new $className($args);
     }
+
+    /**
+     * @return string
+     */
+    public static function getDescriptionClass()
+    {
+        if (empty(self::$descriptionClass)) {
+            self::setDescriptionClass('GuzzleHttp\Command\Guzzle\Description');
+        }
+        
+        return self::$descriptionClass;
+    }
+
+    /**
+     * @param string $descriptionClass
+     */
+    public static function setDescriptionClass($descriptionClass)
+    {
+        if (!in_array('GuzzleHttp\Command\Guzzle\DescriptionInterface', class_implements($descriptionClass))) {
+            $message = "$descriptionClass does not implement GuzzleHttp\\Command\\Guzzle\\DescriptionInterface";
+            throw new \InvalidArgumentException($message);
+        }
+        
+        self::$descriptionClass = $descriptionClass;
+    }
+    
+    /**
+     * @return \GuzzleHttp\Command\Guzzle\DescriptionInterface
+     */
+    public static function getDescription()
+    {
+        $className = self::getDescriptionClass();
+        
+        return new $className(include __DIR__ . '/../config/description.php');
+    }
     
     /**
      * @param array $config
@@ -80,10 +121,6 @@ class Service
      */
     public static function factory(array $config = [])
     {
-        $httpClient = self::getHttpClient($config);
-        
-        $description = new Description(include __DIR__ . '/../config/description.php');
-        
-        return new ContinuousClient($httpClient, $description);
+        return new ContinuousClient(self::getHttpClient($config), self::getDescription());
     }
 }

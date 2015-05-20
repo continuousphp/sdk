@@ -24,11 +24,15 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
 {
     protected $httpClientMock;
     protected $originalHttpClientClass;
+    protected $descriptionMock;
+    protected $originalDescriptionClass;
     
     public function setUp()
     {
         $this->httpClientMock = $this->getMock('GuzzleHttp\ClientInterface');
         $this->originalHttpClientClass = Service::getHttpClientClass();
+        $this->descriptionMock = $this->getMock('GuzzleHttp\Command\Guzzle\DescriptionInterface');
+        $this->originalDescriptionClass = Service::getDescriptionClass();
     }
     
     public function tearDown()
@@ -76,4 +80,25 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayNotHasKey('token', $client->getDefaultOption('query'));
     }
 
+    public function testDescriptionClassAccessor()
+    {
+        $originalClass = Service::getDescriptionClass();
+        
+        Service::setDescriptionClass(get_class($this->descriptionMock));
+        $this->assertAttributeEquals(get_class($this->descriptionMock), 'descriptionClass', 'Continuous\Sdk\Service');
+        Service::setDescriptionClass($originalClass);
+        $this->assertAttributeEquals($originalClass, 'descriptionClass', 'Continuous\Sdk\Service');
+    }
+    
+    public function testDescriptionClassSetterThrowsExceptionOnBadClassnameProvided()
+    {
+        $this->setExpectedException("InvalidArgumentException");
+        Service::setDescriptionClass("stdClass");
+    }
+    
+    public function testGetDescriptionUsesTheRightClassname()
+    {
+        $this->assertInstanceOf(Service::getDescriptionClass(), Service::getDescription());
+    }
+    
 }
