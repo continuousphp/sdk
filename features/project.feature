@@ -15,3 +15,11 @@ Feature: continuousphp Project
       | provider | git-hub |
       | repository | continuousphp/sdk |
     Then The response should be a "project" resource
+    
+  Scenario: Get settings of a specific project
+    Given I've instatiated the sdk with the following
+      | token | cc2efee7-be03-4611-923e-065bc3dd3326 |
+    When I call the "getPipelines" operation with
+      | provider | git-hub |
+      | repository | continuousphp/sdk |
+    Then The response should be a "setting" collection

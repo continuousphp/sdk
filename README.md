@@ -45,6 +45,14 @@ $project = $service->getProject([
 ]);
 ```
 
+### Get the deployment pipelines of a specific project
+```php
+$project = $service->getPipelines([
+    'provider' => 'git-hub',
+    'repository' => 'continuousphp/sdk'
+]);
+```
+
 ### Get the successful and in warning build list for a specific branch
 ```php
 $builds = $service->getBuilds([

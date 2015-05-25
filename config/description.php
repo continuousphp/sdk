@@ -24,6 +24,11 @@ return [
                 ]
             ]
         ],
+        'getPipelines' => [
+            'extends' => 'getProject',
+            'uri' => '/api/projects/{provider}%2F{repository}/settings',
+            'responseModel' => 'pipelineCollection'
+        ],
         'getBuilds' => [
             'extends' => 'getProject',
             'uri' => '/api/projects/{provider}%2F{repository}/builds',
@@ -73,6 +78,12 @@ return [
     ],
     'models' => [
         'projectCollection' => [
+            'type' => 'object',
+            'additionalProperties' => [
+                'location' => 'json'
+            ]
+        ],
+        'pipelineCollection' => [
             'type' => 'object',
             'additionalProperties' => [
                 'location' => 'json'
