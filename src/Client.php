@@ -22,6 +22,7 @@ use GuzzleHttp\Stream\Stream;
  * @license   http://opensource.org/licenses/Apache-2.0 Apache License, Version 2.0
  * @method    array getProjects()
  * @method    array getProject(array $args = array())
+ * @method    array getPipelines(array $args = array())
  * @method    array getBuilds(array $args = array())
  * @method    array getBuild(array $args = array())
  * @method    array getPackage(array $args = array())
