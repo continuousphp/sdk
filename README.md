@@ -10,7 +10,7 @@ Install this package through [Composer](https://getcomposer.org/) by adding this
 
 ```json
 "require": {
-    "continuousphp/sdk": "~0.1"
+    "continuousphp/sdk": "~0.3"
 }
 ```
 
