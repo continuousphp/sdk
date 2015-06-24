@@ -4,13 +4,13 @@ Feature: continuousphp Project
   
   Scenario: Get the project list
     Given I've instatiated the sdk with the following
-    | token | cc2efee7-be03-4611-923e-065bc3dd3326 |
+    | token | e391f57ddd27bb37097a5c46a47776289cf1eff7 |
     When I call the "getProjects" operation
     Then The response should be a "project" collection
 
   Scenario: Get a specific project
     Given I've instatiated the sdk with the following
-      | token | cc2efee7-be03-4611-923e-065bc3dd3326 |
+      | token | e391f57ddd27bb37097a5c46a47776289cf1eff7 |
     When I call the "getProject" operation with
       | provider | git-hub |
       | repository | continuousphp/sdk |
@@ -18,7 +18,7 @@ Feature: continuousphp Project
     
   Scenario: Get settings of a specific project
     Given I've instatiated the sdk with the following
-      | token | cc2efee7-be03-4611-923e-065bc3dd3326 |
+      | token | e391f57ddd27bb37097a5c46a47776289cf1eff7 |
     When I call the "getPipelines" operation with
       | provider | git-hub |
       | repository | continuousphp/sdk |

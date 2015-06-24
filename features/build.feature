@@ -4,7 +4,7 @@ Feature: continuousphp build
 
   Scenario: Get the build list of a specific project
     Given I've instatiated the sdk with the following
-      | token | cc2efee7-be03-4611-923e-065bc3dd3326 |
+      | token | e391f57ddd27bb37097a5c46a47776289cf1eff7 |
     When I call the "getBuilds" operation with
       | provider | git-hub |
       | repository | continuousphp/sdk |
@@ -12,7 +12,7 @@ Feature: continuousphp build
     
   Scenario: Get a specific build
     Given I've instatiated the sdk with the following
-      | token | cc2efee7-be03-4611-923e-065bc3dd3326 |
+      | token | e391f57ddd27bb37097a5c46a47776289cf1eff7 |
     When I call the "getBuild" operation with
       | provider | git-hub |
       | repository | continuousphp/sdk |
@@ -21,7 +21,7 @@ Feature: continuousphp build
     
   Scenario: Get a download url for a specific build
     Given I've instatiated the sdk with the following
-      | token | cc2efee7-be03-4611-923e-065bc3dd3326 |
+      | token | e391f57ddd27bb37097a5c46a47776289cf1eff7 |
     When I call the "getPackage" operation with
       | provider | git-hub |
       | repository | continuousphp/sdk |
@@ -31,7 +31,7 @@ Feature: continuousphp build
     
   Scenario: Download a specific build package
     Given I've instatiated the sdk with the following
-      | token | cc2efee7-be03-4611-923e-065bc3dd3326 |
+      | token | e391f57ddd27bb37097a5c46a47776289cf1eff7 |
     When I call the "downloadPackage" operation with
       | provider | git-hub |
       | repository | continuousphp/sdk |

@@ -74,7 +74,7 @@ class Service
         ];
         
         if (isset($config['token'])) {
-            $args['defaults']['query']['token'] = $config['token'];
+            $args['defaults']['headers']['Authorization'] = "Bearer " . $config['token'];
         }
         
         return new $className($args);
