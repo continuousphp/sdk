@@ -66,7 +66,6 @@ class Service
         
         $args = [
             'defaults' => [
-                'query' => [],
                 'headers' => [
                     'Accept' => 'application/hal+json'
                 ]
