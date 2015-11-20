@@ -2,6 +2,11 @@
 return [
     'baseUrl' => 'https://api.continuousphp.com/',
     'operations' => [
+        'getCompanies' => [
+            'httpMethod' => 'GET',
+            'uri' => '/api/companies',
+            'responseModel' => 'companyCollection'
+        ],
         'getProjects' => [
             'httpMethod' => 'GET',
             'uri' => '/api/projects',
@@ -77,6 +82,12 @@ return [
         ]
     ],
     'models' => [
+        'companyCollection' => [
+            'type' => 'object',
+            'additionalProperties' => [
+                'location' => 'json'
+            ]
+        ],
         'projectCollection' => [
             'type' => 'object',
             'additionalProperties' => [

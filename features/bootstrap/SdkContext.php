@@ -80,9 +80,15 @@ class SdkContext implements Context, SnippetAcceptingContext
      */
     public function theResponseShouldBeACollection($type)
     {
+        if (substr($type, -1)=='y') {
+            $type = substr_replace($type, 'ies', -1);
+        } else {
+            $type .= 's';
+        }
+        
         \PHPUnit_Framework_Assert::assertInternalType('array', $this->result);
         \PHPUnit_Framework_Assert::assertArrayHasKey('_embedded', $this->result);
-        \PHPUnit_Framework_Assert::assertArrayHasKey($type . 's', $this->result['_embedded']);
+        \PHPUnit_Framework_Assert::assertArrayHasKey($type, $this->result['_embedded']);
     }
 
     /**
