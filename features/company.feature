@@ -4,6 +4,6 @@ Feature: continuousphp Company
   
   Scenario: Get the company list
     Given I've instatiated the sdk with the following
-    | token | e391f57ddd27bb37097a5c46a47776289cf1eff7 |
+    | token | b52f9c7faf680988f88391b35e5e488883442036 |
     When I call the "getCompanies" operation
     Then The response should be a "company" collection
