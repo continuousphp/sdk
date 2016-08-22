@@ -62,10 +62,6 @@ class SdkContext implements Context, SnippetAcceptingContext
      */
     public function iCallTheOperation($operation, TableNode $table = null)
     {
-        // try to prevent request collision 
-        if (substr($operation, 0, 3)=='put') {
-            sleep(mt_rand(0, 20));
-        }
         $this->result = null;
         $args = [];
         if ($table) {
