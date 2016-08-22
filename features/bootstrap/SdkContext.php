@@ -51,10 +51,8 @@ class SdkContext implements Context, SnippetAcceptingContext
      */
     public function iVeInstatiatedTheSdkWithTheFollowing(TableNode $table)
     {
-        $config = [];
-        foreach ($table->getTable() as $row) {
-            $config[$row[0]] = $row[1];
-        }
+        $config = $table->getRowsHash();
+
         $this->sdk = Service::factory($config);
     }
 
@@ -68,8 +66,16 @@ class SdkContext implements Context, SnippetAcceptingContext
         $args = [];
         if ($table) {
             foreach ($table->getTable() as $row) {
-                $args[$row[0]] = $row[1];
+                if (isset($query)) {
+                    $query .= "&";
+                } else {
+                    $query = '';
+                }
+                $query.= $row[0] . '=' . $row[1];
             };
+            if ($query) {
+                parse_str($query, $args);
+            }
         }
         
         $this->result = call_user_func([$this->sdk, $operation], $args);
