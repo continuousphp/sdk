@@ -23,6 +23,7 @@ use GuzzleHttp\Stream\Stream;
  * @method    array getProjects()
  * @method    array getProject(array $args = array())
  * @method    array getPipelines(array $args = array())
+ * @method    array putPipeline(array $args = array())
  * @method    array getBuilds(array $args = array())
  * @method    array getBuild(array $args = array())
  * @method    array getPackage(array $args = array())
