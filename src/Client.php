@@ -50,9 +50,18 @@ class Client extends GuzzleClient
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_FILE, $fp);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        curl_exec($ch);
+        $result = curl_exec($ch);
+        
+        if (!$result) {
+            $exception = new Exception("The download failed with the following error: " . curl_error($ch));
+        }
+        
         curl_close($ch);
         fclose($fp);
+        
+        if (isset($exception)) {
+            throw $exception;
+        }
         
         return ['path' => $path];
     }
