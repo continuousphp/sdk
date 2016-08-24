@@ -15,6 +15,15 @@ Feature: continuousphp Project
       | provider | git-hub |
       | repository | continuousphp/sdk |
     Then The response should be a "project" resource
+
+  Scenario: Create a specific project
+    Given I've instatiated the sdk with the following
+      | token | b52f9c7faf680988f88391b35e5e488883442036 |
+    When I call the "createProject" operation with
+      | provider    | git-hub                 |
+      | repository  | fdewinnetest/sdk        |
+      | description | my project description  |
+    Then a 409 error should occurs
     
   Scenario: Get settings of a specific project
     Given I've instatiated the sdk with the following

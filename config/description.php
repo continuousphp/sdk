@@ -22,10 +22,11 @@ return [
                     'location' => 'json',
                     'required' => true
                 ],
-                'url' => [
+                'repository' => [
                     'type' => 'string',
                     'location' => 'json',
-                    'required' => true
+                    'required' => true,
+                    'sentAs' => 'url'
                 ],
                 'name' => [
                     'type' => 'string',

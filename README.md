@@ -32,6 +32,11 @@ require 'vendor/autoload.php';
 $service = Continuous\Sdk\Service::factory(['token' => 'my-access-token']);
 ```
 
+### Get your repository list
+```php
+$projects = $service->getRepositories();
+```
+
 ### Get your project list
 ```php
 $projects = $service->getProjects();
@@ -40,6 +45,14 @@ $projects = $service->getProjects();
 ### Get a specific project
 ```php
 $project = $service->getProject([
+    'provider' => 'git-hub',
+    'repository' => 'continuousphp/sdk'
+]);
+```
+
+### Create a specific project
+```php
+$project = $service->createProject([
     'provider' => 'git-hub',
     'repository' => 'continuousphp/sdk'
 ]);

@@ -105,7 +105,7 @@ class SdkContext implements Context, SnippetAcceptingContext
     public function theResponseShouldBeACollection($type)
     {
         if ($this->exception) {
-            Throw $this->exception;
+            throw $this->exception;
         }
         if (substr($type, -1)=='y') {
             $type = substr_replace($type, 'ies', -1);

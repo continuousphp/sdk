@@ -32,8 +32,8 @@ class Client extends GuzzleClient
 {
     public function createProject($args = array())
     {
-        if (isset($args['url'])) {
-            $args['name'] = $args['url'];
+        if (isset($args['repository'])) {
+            $args['name'] = $args['repository'];
         }
 
         return $this->execute(
