@@ -18,6 +18,7 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Continuous\Sdk\Client;
 use Continuous\Sdk\Service;
+use GuzzleHttp\Command\Exception\CommandClientException;
 
 /**
  * SdkContext
@@ -34,6 +35,9 @@ class SdkContext implements Context, SnippetAcceptingContext
     protected $sdk;
     
     protected $result;
+    
+    /** @var CommandClientException */
+    protected $exception;
     
     /**
      * Initializes context.
@@ -54,6 +58,16 @@ class SdkContext implements Context, SnippetAcceptingContext
         $config = $table->getRowsHash();
 
         $this->sdk = Service::factory($config);
+    }
+
+    /**
+     * @Then a :code error should occurs
+     */
+    public function aErrorShouldOccurs($code)
+    {
+        if (!$this->exception || $this->exception->getCode()!=$code) {
+            throw $this->exception;
+        }
     }
 
     /**
@@ -78,7 +92,11 @@ class SdkContext implements Context, SnippetAcceptingContext
             }
         }
         
-        $this->result = call_user_func([$this->sdk, $operation], $args);
+        try {
+            $this->result = call_user_func([$this->sdk, $operation], $args);
+        } catch (CommandClientException $e) {
+            $this->exception = $e;
+        }
     }
 
     /**
@@ -86,6 +104,9 @@ class SdkContext implements Context, SnippetAcceptingContext
      */
     public function theResponseShouldBeACollection($type)
     {
+        if ($this->exception) {
+            Throw $this->exception;
+        }
         if (substr($type, -1)=='y') {
             $type = substr_replace($type, 'ies', -1);
         } else {

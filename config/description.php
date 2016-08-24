@@ -7,6 +7,37 @@ return [
             'uri' => '/api/companies',
             'responseModel' => 'companyCollection'
         ],
+        'getRepositories' => [
+            'httpMethod' => 'GET',
+            'uri' => '/api/repositories',
+            'responseModel' => 'repositoryCollection'
+        ],
+        'createProject' => [
+            'httpMethod' => 'POST',
+            'uri' => '/api/projects',
+            'responseModel' => 'project',
+            'parameters' => [
+                'provider' => [
+                    'type' => 'string',
+                    'location' => 'json',
+                    'required' => true
+                ],
+                'url' => [
+                    'type' => 'string',
+                    'location' => 'json',
+                    'required' => true
+                ],
+                'name' => [
+                    'type' => 'string',
+                    'location' => 'json',
+                    'required' => true
+                ],
+                'description' => [
+                    'type' => 'string',
+                    'location' => 'json'
+                ]
+            ]
+        ],
         'getProjects' => [
             'httpMethod' => 'GET',
             'uri' => '/api/projects',
@@ -166,6 +197,12 @@ return [
     ],
     'models' => [
         'companyCollection' => [
+            'type' => 'object',
+            'additionalProperties' => [
+                'location' => 'json'
+            ]
+        ],
+        'repositoryCollection' => [
             'type' => 'object',
             'additionalProperties' => [
                 'location' => 'json'

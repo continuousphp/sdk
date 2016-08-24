@@ -30,6 +30,20 @@ use GuzzleHttp\Stream\Stream;
  */
 class Client extends GuzzleClient
 {
+    public function createProject($args = array())
+    {
+        if (isset($args['url'])) {
+            $args['name'] = $args['url'];
+        }
+
+        return $this->execute(
+            $this->getCommand(
+                'createProject',
+                $args
+            )
+        );
+    }
+    
     /**
      * @param array $args
      * @return array
