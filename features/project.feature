@@ -16,6 +16,14 @@ Feature: continuousphp Project
       | repository | continuousphp/sdk |
     Then The response should be a "project" resource
 
+  Scenario: Get a non existing project trigger an error
+    Given I've instatiated the sdk with the following
+      | token | b52f9c7faf680988f88391b35e5e488883442036 |
+    When I call the "getProject" operation with
+      | provider | git-hub |
+      | repository | continuousphp/sdks |
+    Then a 404 error should occurs
+
   Scenario: Create a specific project
     Given I've instatiated the sdk with the following
       | token | b52f9c7faf680988f88391b35e5e488883442036 |
