@@ -123,6 +123,12 @@ class SdkContext implements Context, SnippetAcceptingContext
      */
     public function theResponseShouldBeAResource($type)
     {
+        if ($this->exception) {
+            if ($this->exception instanceof CommandClientException) {
+                echo $this->exception->getResponse()->getBody();
+            }
+            throw $this->exception;
+        }
         \PHPUnit_Framework_Assert::assertInternalType('array', $this->result);
         \PHPUnit_Framework_Assert::assertArrayHasKey($type . 'Id', $this->result);
     }

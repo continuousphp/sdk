@@ -71,6 +71,7 @@ $project = $service->getPipelines([
 $project = $service->putPipeline([
     'provider' => 'git-hub',
     'repository' => 'continuousphp/sdk',
+    'ref' => 'refs/heads/master',
     'phpVersions' => [ '5.3.3', '5.3.max', '5.4.max', '5.5.max' ],
     'preparePhingTargets' => [ 'clean-up', 'setup-env', 'doctrine-proxies' ],
     'preDeployPhingTargets' => [ 'clean-up2', 'setup-env2', 'doctrine-proxies2' ],
@@ -179,14 +180,17 @@ $project = $service->putPipeline([
         'type' => 'tarball',
         'destinations' => [
             [
+                'name' => 'my first destination',
                 'url' => '<url1>',
                 'pullRequest' => '1',
             ],
             [
+                'name' => 'my second destination',
                 'url' => '<url2>',
                 'pullRequest' => '0'
             ],
             [
+                'name' => 'my third destination',
                 'url' => '<url3>'
             ]
         ]
