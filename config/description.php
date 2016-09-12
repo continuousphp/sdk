@@ -126,6 +126,14 @@ return [
                     'type' => 'string',
                     'location' => 'json'
                 ],
+                'runComposerHooksInPrepare' => [
+                    'type' => 'string',
+                    'location' => 'json'
+                ],
+                'runComposerHooksInPackage' => [
+                    'type' => 'string',
+                    'location' => 'json'
+                ],
                 'phingPath' => [
                     'type' => 'string',
                     'location' => 'json'

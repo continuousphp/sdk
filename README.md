@@ -95,6 +95,8 @@ $project = $service->putPipeline([
     'packageRootPath' => '/path/to/package/root'
     'composerPath' => '/path/to/composer',
     'enableComposerCache' => '1',
+    'runComposerHooksInPrepare' => '1',
+    'runComposerHooksInPackage' => '1',
     'phingPath' => '/path/to/phing'
     'enabledTests' => [
         [
