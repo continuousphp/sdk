@@ -198,8 +198,7 @@ return [
                 'packageType' => [
                     'type' => 'string',
                     'location' => 'uri',
-                    'required' => true,
-                    'enum' => ['deploy', 'test']
+                    'required' => true
                 ]
             ]
         ]
