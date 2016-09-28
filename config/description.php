@@ -178,6 +178,22 @@ return [
                 ]
             ]
         ],
+        'startBuild' => [
+            'extends' => 'getProject',
+            'httpMethod' => 'POST',
+            'uri' => '/api/projects/{provider}%2F{repository}/builds',
+            'responseModel' => 'buildCollection',
+            'parameters' => [
+                'ref' => [
+                    'type' => 'string',
+                    'location' => 'json'
+                ],
+                'pull_request' => [
+                    'type' => 'string',
+                    'location' => 'json'
+                ]
+            ]
+        ],
         'getBuild' => [
             'extends' => 'getProject',
             'uri' => '/api/projects/{provider}%2F{repository}/builds/{buildId}',

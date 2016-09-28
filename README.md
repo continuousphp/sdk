@@ -231,6 +231,24 @@ $builds = $service->getBuilds([
 ]);
 ```
 
+### Start a new build for a specific branch
+```php
+$builds = $service->startBuild([
+    'provider' => 'git-hub',
+    'repository' => 'continuousphp/sdk',
+    'ref' => 'refs/heads/master'
+]);
+```
+
+### Start a new build for a specific Pull Request
+```php
+$builds = $service->startBuild([
+    'provider' => 'git-hub',
+    'repository' => 'continuousphp/sdk',
+    'pull_request' => '21'
+]);
+```
+
 ### Get the package download url of the last build
 ```php
 $package = $service->getPackage([
