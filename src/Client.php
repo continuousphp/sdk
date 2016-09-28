@@ -20,13 +20,14 @@ use GuzzleHttp\Stream\Stream;
  * @package   Continuous\Sdk
  * @author    Frederic Dewinne <frederic@continuousphp.com>
  * @license   http://opensource.org/licenses/Apache-2.0 Apache License, Version 2.0
+ * @method    array getCompanies()
+ * @method    array getRepositories()
  * @method    array getProjects()
  * @method    array getProject(array $args = array())
- * @method    array createProject(array $args = array())
- * @method    array getRepositories()
  * @method    array getPipelines(array $args = array())
  * @method    array putPipeline(array $args = array())
  * @method    array getBuilds(array $args = array())
+ * @method    array startBuild(array $args = array())
  * @method    array getBuild(array $args = array())
  * @method    array getPackage(array $args = array())
  */
