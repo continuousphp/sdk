@@ -31,6 +31,7 @@ require 'vendor/autoload.php';
 
 $service = Continuous\Sdk\Service::factory(['token' => 'my-access-token']);
 ```
+Another way to use your access token consist in declaring it in `CPHP_TOKEN` environment variable
 
 ### Get your repository list
 ```php

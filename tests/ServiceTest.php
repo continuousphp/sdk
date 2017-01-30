@@ -12,6 +12,7 @@
 namespace Continuous\Tests\Sdk;
 
 use Continuous\Sdk\Service;
+use phpmock\phpunit\PHPMock;
 
 /**
  * ServiceTest
@@ -22,6 +23,8 @@ use Continuous\Sdk\Service;
  */
 class ServiceTest extends \PHPUnit_Framework_TestCase
 {
+    use PHPMock;
+    
     protected $httpClientMock;
     protected $originalHttpClientClass;
     protected $descriptionMock;
@@ -70,6 +73,23 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals("Bearer " . $token, $client->getDefaultOption('headers')['Authorization']);
     }
     
+    public function testGetHttpClientSetCorrectlyAccessTokenIfSetAsEnvVar()
+    {
+        $token = 'my-awesome-token';
+        $getenv = $this->getFunctionMock('Continuous\Sdk', 'getenv');
+        $getenv->expects($this->once())
+            ->with('CPHP_TOKEN')
+            ->willReturn($token);
+        
+        Service::setHttpClientClass('GuzzleHttp\Client');
+        
+        $client = Service::getHttpClient();
+        $this->assertInstanceOf('GuzzleHttp\Client', $client);
+        
+        $this->assertArrayHasKey('Authorization', $client->getDefaultOption('headers'));
+        $this->assertEquals("Bearer " . $token, $client->getDefaultOption('headers')['Authorization']);
+    }
+    
     public function testGetHttpClientHasNoTokenIfNotProvided()
     {
         Service::setHttpClientClass('GuzzleHttp\Client');
@@ -100,5 +120,4 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(Service::getDescriptionClass(), Service::getDescription());
     }
-    
 }
