@@ -74,6 +74,8 @@ class Service
         
         if (isset($config['token'])) {
             $args['defaults']['headers']['Authorization'] = "Bearer " . $config['token'];
+        } elseif ($token = getenv('CPHP_TOKEN')) {
+            $args['defaults']['headers']['Authorization'] = "Bearer " . $token;
         }
         
         return new $className($args);
