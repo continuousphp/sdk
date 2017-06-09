@@ -65,19 +65,17 @@ class Service
         $className = self::getHttpClientClass();
         
         $args = [
-            'defaults' => [
-                'headers' => [
-                    'Accept' => 'application/hal+json'
-                ]
+            'headers' => [
+                'Accept' => 'application/hal+json'
             ]
         ];
         
         if (isset($config['token'])) {
-            $args['defaults']['headers']['Authorization'] = "Bearer " . $config['token'];
+            $args['headers']['Authorization'] = "Bearer " . $config['token'];
         } elseif ($token = getenv('CPHP_TOKEN')) {
-            $args['defaults']['headers']['Authorization'] = "Bearer " . $token;
+            $args['headers']['Authorization'] = "Bearer " . $token;
         }
-        
+
         return new $className($args);
     }
 

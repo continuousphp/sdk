@@ -69,8 +69,8 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $client = Service::getHttpClient($config);
         $this->assertInstanceOf('GuzzleHttp\Client', $client);
         
-        $this->assertArrayHasKey('Authorization', $client->getDefaultOption('headers'));
-        $this->assertEquals("Bearer " . $token, $client->getDefaultOption('headers')['Authorization']);
+        $this->assertArrayHasKey('Authorization', $client->getConfig('headers'));
+        $this->assertEquals("Bearer " . $token, $client->getConfig('headers')['Authorization']);
     }
     
     public function testGetHttpClientSetCorrectlyAccessTokenIfSetAsEnvVar()
@@ -86,8 +86,8 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $client = Service::getHttpClient();
         $this->assertInstanceOf('GuzzleHttp\Client', $client);
         
-        $this->assertArrayHasKey('Authorization', $client->getDefaultOption('headers'));
-        $this->assertEquals("Bearer " . $token, $client->getDefaultOption('headers')['Authorization']);
+        $this->assertArrayHasKey('Authorization', $client->getConfig('headers'));
+        $this->assertEquals("Bearer " . $token, $client->getConfig('headers')['Authorization']);
     }
     
     public function testGetHttpClientHasNoTokenIfNotProvided()
@@ -97,7 +97,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
         $client = Service::getHttpClient();
         $this->assertInstanceOf('GuzzleHttp\Client', $client);
         
-        $this->assertArrayNotHasKey('Authorization', $client->getDefaultOption('headers'));
+        $this->assertArrayNotHasKey('Authorization', $client->getConfig('headers'));
     }
 
     public function testDescriptionClassAccessor()
