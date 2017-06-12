@@ -160,7 +160,7 @@ return [
         'getBuilds' => [
             'extends' => 'getProject',
             'uri' => '/api/projects/{provider}%2F{repository}/builds',
-            'responseModel' => 'buildCollection',
+            'responseClass' => 'buildCollection',
             'parameters' => [
                 'state' => [
                     'type' => 'array',
@@ -247,7 +247,7 @@ return [
         'buildCollection' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => \Continuous\Sdk\ResponseLocation\BuildLocation::class,
             ]
         ],
         'project' => [

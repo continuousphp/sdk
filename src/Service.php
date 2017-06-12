@@ -12,6 +12,7 @@
 namespace Continuous\Sdk;
 
 use Continuous\Sdk\Client as ContinuousClient;
+use Continuous\Sdk\Entity\Build;
 
 /**
  * Service
@@ -67,7 +68,7 @@ class Service
         $args = [
             'headers' => [
                 'Accept' => 'application/hal+json'
-            ]
+            ],
         ];
         
         if (isset($config['token'])) {
@@ -120,6 +121,17 @@ class Service
      */
     public static function factory(array $config = [])
     {
-        return new ContinuousClient(self::getHttpClient($config), self::getDescription());
+        $locations = [
+            'response_locations' => [
+                \Continuous\Sdk\ResponseLocation\BuildLocation::class => new \Continuous\Sdk\ResponseLocation\BuildLocation(),
+            ]
+        ];
+
+        return new ContinuousClient(
+            self::getHttpClient($config)
+            , self::getDescription()
+            ,null, null, null
+            , $locations
+        );
     }
 }

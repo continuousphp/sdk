@@ -28,8 +28,14 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Continuous\\Tests\\Sdk\\": "tests/",
-      "Continuous\\Features\\": "features/bootstrap/"
+      "Continuous\\Tests\\Sdk\\": "tests/Tests",
+      "Continuous\\Features\\": "features/bootstrap/",
+      "Continuous\\Fixtures\\Sdk\\": "tests/Fixtures"
     }
+  },
+  "scripts": {
+    "post-update-cmd": [
+      "cp patch/GuzzleClient.php vendor/guzzlehttp/guzzle-services/src/GuzzleClient.php"
+    ]
   }
 }
