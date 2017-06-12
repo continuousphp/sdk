@@ -13,6 +13,11 @@ namespace Continuous\Sdk;
 
 use Continuous\Sdk\Client as ContinuousClient;
 use Continuous\Sdk\Entity\Build;
+use Continuous\Sdk\Entity\Company;
+use Continuous\Sdk\Entity\Package;
+use Continuous\Sdk\Entity\Pipeline;
+use Continuous\Sdk\Entity\Project;
+use Continuous\Sdk\Entity\Repository;
 
 /**
  * Service
@@ -123,7 +128,12 @@ class Service
     {
         $locations = [
             'response_locations' => [
-                \Continuous\Sdk\ResponseLocation\BuildLocation::class => new \Continuous\Sdk\ResponseLocation\BuildLocation(),
+                'cphp-build' => new \Continuous\Sdk\ResponseLocation\HalLocation('cphp-build', Build::class),
+                'cphp-company' => new \Continuous\Sdk\ResponseLocation\HalLocation('cphp-company', Company::class),
+                'cphp-project' => new \Continuous\Sdk\ResponseLocation\HalLocation('cphp-project', Project::class),
+                'cphp-setting' => new \Continuous\Sdk\ResponseLocation\HalLocation('cphp-setting', Pipeline::class),
+                'cphp-repository' => new \Continuous\Sdk\ResponseLocation\HalLocation('cphp-repository', Repository::class),
+                'cphp-package' => new \Continuous\Sdk\ResponseLocation\HalLocation('cphp-package', Package::class),
             ]
         ];
 

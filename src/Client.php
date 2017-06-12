@@ -11,8 +11,8 @@
 
 namespace Continuous\Sdk;
 
+use Continuous\Sdk\Entity\Package;
 use GuzzleHttp\Command\Guzzle\GuzzleClient;
-use GuzzleHttp\Stream\Stream;
 
 /**
  * Service
@@ -46,7 +46,7 @@ class Client extends GuzzleClient
             )
         );
     }
-    
+
     /**
      * @param array $args
      * @return array
@@ -59,9 +59,10 @@ class Client extends GuzzleClient
         $destination = $args['destination'];
         
         unset($args['destination']);
+        /** @var Package $package */
         $package = $this->getPackage($args);
-        
-        $url = $package['url'];
+
+        $url = $package->get('url');
         $path = $destination . '/' . pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_BASENAME);
         
         $fp = fopen($path, 'w+');

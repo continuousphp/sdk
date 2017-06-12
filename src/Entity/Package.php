@@ -3,14 +3,14 @@
 namespace Continuous\Sdk\Entity;
 
 /**
- * Class Build
+ * Class Package
  * @package Continuous\Sdk\Entity
  */
-class Build extends EntityAbstract
+class Package extends EntityAbstract
 {
     public function hydrate(Array $attributes)
     {
-        $this->id = $attributes['buildId'];
+        $this->id = $attributes['packageId'];
         $this->attributes = $attributes;
     }
 }

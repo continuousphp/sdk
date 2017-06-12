@@ -1,7 +1,7 @@
 Feature: continuousphp Project
   As a Developer
   I need to be able to access my projects from continuousphp API
-  
+
   Scenario: Get the project list
     Given I've instatiated the sdk with the following
     | token | b52f9c7faf680988f88391b35e5e488883442036 |
@@ -32,7 +32,7 @@ Feature: continuousphp Project
       | repository  | fdewinnetest/sdk        |
       | description | my project description  |
     Then a 409 error should occurs
-    
+
   Scenario: Get settings of a specific project
     Given I've instatiated the sdk with the following
       | token | b52f9c7faf680988f88391b35e5e488883442036 |
@@ -40,7 +40,7 @@ Feature: continuousphp Project
       | provider | git-hub |
       | repository | continuousphp/sdk |
     Then The response should be a "setting" collection
-  
+
   Scenario: Put setting of a specific project
     Given I've instatiated the sdk with the following
       | token | b52f9c7faf680988f88391b35e5e488883442036 |

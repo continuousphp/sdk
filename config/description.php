@@ -209,7 +209,7 @@ return [
         'getPackage' => [
             'extends' => 'getBuild',
             'uri' => '/api/projects/{provider}%2F{repository}/builds/{buildId}/packages/{packageType}',
-            'responseModel' => 'build',
+            'responseModel' => 'package',
             'parameters' => [
                 'packageType' => [
                     'type' => 'string',
@@ -223,55 +223,55 @@ return [
         'companyCollection' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-company',
             ]
         ],
         'repositoryCollection' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-repository'
             ]
         ],
         'projectCollection' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-project'
             ]
         ],
         'pipelineCollection' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-setting'
             ]
         ],
         'buildCollection' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => \Continuous\Sdk\ResponseLocation\BuildLocation::class,
+                'location' => 'cphp-build',
             ]
         ],
         'project' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-project'
             ]
         ],
         'build' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-build',
             ]
         ],
         'pipeline' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-setting'
             ]
         ],
         'package' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-package'
             ]
         ],
     ]

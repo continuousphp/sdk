@@ -17,6 +17,9 @@ use Behat\Behat\Tester\Exception\PendingException;
 use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Continuous\Sdk\Client;
+use Continuous\Sdk\Collection;
+use Continuous\Sdk\Entity\Build;
+use Continuous\Sdk\Entity\EntityInterface;
 use Continuous\Sdk\Service;
 use GuzzleHttp\Command\Exception\CommandClientException;
 
@@ -65,7 +68,7 @@ class SdkContext implements Context, SnippetAcceptingContext
      */
     public function aErrorShouldOccurs($code)
     {
-        if (!$this->exception || $this->exception->getCode()!=$code) {
+        if (!$this->exception || (int)$code !== $this->exception->getResponse()->getStatusCode()) {
             throw $this->exception;
         }
     }
@@ -91,7 +94,7 @@ class SdkContext implements Context, SnippetAcceptingContext
                 parse_str($query, $args);
             }
         }
-        
+
         try {
             $this->result = call_user_func([$this->sdk, $operation], $args);
         } catch (CommandClientException $e) {
@@ -112,8 +115,9 @@ class SdkContext implements Context, SnippetAcceptingContext
         } else {
             $type .= 's';
         }
-        
-        \PHPUnit_Framework_Assert::assertInternalType('array', $this->result);
+
+        \PHPUnit_Framework_Assert::assertInstanceOf(Collection::class, $this->result);
+        \PHPUnit_Framework_Assert::assertEquals($type, $this->result->getEntityType());
         \PHPUnit_Framework_Assert::assertArrayHasKey('_embedded', $this->result);
         \PHPUnit_Framework_Assert::assertArrayHasKey($type, $this->result['_embedded']);
     }
@@ -129,8 +133,9 @@ class SdkContext implements Context, SnippetAcceptingContext
             }
             throw $this->exception;
         }
-        \PHPUnit_Framework_Assert::assertInternalType('array', $this->result);
-        \PHPUnit_Framework_Assert::assertArrayHasKey($type . 'Id', $this->result);
+
+        \PHPUnit_Framework_Assert::assertInstanceOf(EntityInterface::class, $this->result);
+        \PHPUnit_Framework_Assert::assertTrue($this->result->has($type . 'Id'));
     }
     
     /**
@@ -138,9 +143,29 @@ class SdkContext implements Context, SnippetAcceptingContext
      */
     public function theResponseShouldContainA($key)
     {
-        \PHPUnit_Framework_Assert::assertInternalType('array', $this->result);
-        \PHPUnit_Framework_Assert::assertArrayHasKey($key, $this->result);
-        \PHPUnit_Framework_Assert::assertNotEmpty($this->result[$key]);
+        if ('array' === gettype($this->result)) {
+            \PHPUnit_Framework_Assert::assertInternalType('array', $this->result);
+            \PHPUnit_Framework_Assert::assertArrayHasKey($key, $this->result);
+            \PHPUnit_Framework_Assert::assertNotEmpty($this->result[$key]);
+
+            return;
+        }
+
+        if ($this->result instanceof Collection) {
+            \PHPUnit_Framework_Assert::assertArrayHasKey($key, $this->result);
+            \PHPUnit_Framework_Assert::assertNotEmpty($this->result[$key]);
+
+            return;
+        }
+
+        if ($this->result instanceof EntityInterface) {
+            \PHPUnit_Framework_Assert::assertTrue($this->result->has($key));
+            \PHPUnit_Framework_Assert::assertNotEmpty($this->result->get($key));
+
+            return;
+        }
+
+        throw new \Exception('result must be array or object instance of entity or collection');
     }
     
     /**
