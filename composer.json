@@ -23,7 +23,7 @@
   },
   "require": {
     "php": ">=5.4.0",
-    "guzzlehttp/guzzle-services": "~1.1.0"
+    "pierozi/guzzle-services": "~1.1.0"
   },
   "autoload": {
     "psr-4": {
