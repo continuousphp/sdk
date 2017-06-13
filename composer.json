@@ -3,7 +3,11 @@
   "homepage": "https://github.com/continuousphp/sdk",
   "description": "PHP SDK to consume continuousphp API",
   "type": "library",
-  "keywords": ["build", "tool", "continuousphp"],
+  "keywords": [
+    "build",
+    "tool",
+    "continuousphp"
+  ],
   "license": "Apache-2.0",
   "authors": [
     {
@@ -33,9 +37,10 @@
       "Continuous\\Fixtures\\Sdk\\": "tests/Fixtures"
     }
   },
-  "scripts": {
-    "post-update-cmd": [
-      "cp patch/GuzzleClient.php vendor/guzzlehttp/guzzle-services/src/GuzzleClient.php"
-    ]
-  }
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/Pierozi/guzzle-services.git"
+    }
+  ]
 }
