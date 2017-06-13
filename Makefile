@@ -4,4 +4,7 @@ phpunit:
 behat:
 	./vendor/bin/behat -vv
 
-test: phpunit behat	
+cs:
+	./vendor/bin/phpcs
+
+test: phpunit behat cs	

@@ -18,6 +18,7 @@ use Continuous\Sdk\Entity\Package;
 use Continuous\Sdk\Entity\Pipeline;
 use Continuous\Sdk\Entity\Project;
 use Continuous\Sdk\Entity\Repository;
+use Continuous\Sdk\ResponseLocation\HalLocation;
 
 /**
  * Service
@@ -128,20 +129,22 @@ class Service
     {
         $locations = [
             'response_locations' => [
-                'cphp-build' => new \Continuous\Sdk\ResponseLocation\HalLocation('cphp-build', Build::class),
-                'cphp-company' => new \Continuous\Sdk\ResponseLocation\HalLocation('cphp-company', Company::class),
-                'cphp-project' => new \Continuous\Sdk\ResponseLocation\HalLocation('cphp-project', Project::class),
-                'cphp-setting' => new \Continuous\Sdk\ResponseLocation\HalLocation('cphp-setting', Pipeline::class),
-                'cphp-repository' => new \Continuous\Sdk\ResponseLocation\HalLocation('cphp-repository', Repository::class),
-                'cphp-package' => new \Continuous\Sdk\ResponseLocation\HalLocation('cphp-package', Package::class),
+                'cphp-build' => new HalLocation('cphp-build', Build::class),
+                'cphp-company' => new HalLocation('cphp-company', Company::class),
+                'cphp-project' => new HalLocation('cphp-project', Project::class),
+                'cphp-setting' => new HalLocation('cphp-setting', Pipeline::class),
+                'cphp-repository' => new HalLocation('cphp-repository', Repository::class),
+                'cphp-package' => new HalLocation('cphp-package', Package::class),
             ]
         ];
 
         return new ContinuousClient(
-            self::getHttpClient($config)
-            , self::getDescription()
-            ,null, null, null
-            , $locations
+            self::getHttpClient($config),
+            self::getDescription(),
+            null,
+            null,
+            null,
+            $locations
         );
     }
 }

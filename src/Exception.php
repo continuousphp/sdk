@@ -20,5 +20,4 @@ namespace Continuous\Sdk;
  */
 class Exception extends \Exception
 {
-
 }

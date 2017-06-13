@@ -8,7 +8,7 @@ namespace Continuous\Sdk\Entity;
  */
 class Pipeline extends EntityAbstract
 {
-    public function hydrate(Array $attributes)
+    public function hydrate(array $attributes)
     {
         $this->id = $attributes['settingId'];
         $this->attributes = $attributes;

@@ -8,7 +8,7 @@ namespace Continuous\Sdk\Entity;
  */
 class Repository extends EntityAbstract
 {
-    public function hydrate(Array $attributes)
+    public function hydrate(array $attributes)
     {
         $this->id = $attributes['repositoryId'];
         $this->attributes = $attributes;
