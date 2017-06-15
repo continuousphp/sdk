@@ -165,12 +165,12 @@ return [
                 'state' => [
                     'type' => 'array',
                     'location' => 'query',
-                    'enum' => ['in-progress', 'complete', 'timeout']
+                    'enum' => \Continuous\Sdk\Entity\Build::STATE
                 ],
                 'result' => [
                     'type' => 'array',
                     'location' => 'query',
-                    'enum' => ['success', 'warning', 'failed']
+                    'enum' => \Continuous\Sdk\Entity\Build::RESULT
                 ],
                 'pipeline_id' => [
                     'type' => 'string',
@@ -202,6 +202,7 @@ return [
             'extends' => 'getProject',
             'httpMethod' => 'DELETE',
             'uri' => '/api/projects/{provider}%2F{repository}/builds/{buildId}',
+            'responseModel' => 'statusCode',
             'parameters' => [
                 'provider' => [
                     'type' => 'string',
@@ -246,6 +247,12 @@ return [
         ]
     ],
     'models' => [
+        'statusCode' => [
+            'type' => 'object',
+            'additionalProperties' => [
+                'location' => 'statusCode',
+            ]
+        ],
         'companyCollection' => [
             'type' => 'object',
             'additionalProperties' => [

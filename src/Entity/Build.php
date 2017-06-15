@@ -8,6 +8,9 @@ namespace Continuous\Sdk\Entity;
  */
 class Build extends EntityAbstract
 {
+    const STATE = ['in-progress', 'complete', 'timeout', 'canceled'];
+    const RESULT = ['success', 'warning', 'failed'];
+
     public function hydrate(array $attributes)
     {
         $this->id = $attributes['buildId'];
