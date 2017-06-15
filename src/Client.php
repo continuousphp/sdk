@@ -27,8 +27,9 @@ use GuzzleHttp\Command\Guzzle\GuzzleClient;
  * @method    array getPipelines(array $args = array())
  * @method    array putPipeline(array $args = array())
  * @method    array getBuilds(array $args = array())
- * @method    array startBuild(array $args = array())
- * @method    array getBuild(array $args = array())
+ * @method    \Continuous\Sdk\Entity\Build startBuild(array $args = array())
+ * @method    \Continuous\Sdk\Entity\Build getBuild(array $args = array())
+ * @method    array cancelBuild(array $args = array())
  * @method    array getPackage(array $args = array())
  */
 class Client extends GuzzleClient

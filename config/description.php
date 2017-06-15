@@ -186,7 +186,7 @@ return [
             'extends' => 'getProject',
             'httpMethod' => 'POST',
             'uri' => '/api/projects/{provider}%2F{repository}/builds',
-            'responseModel' => 'buildCollection',
+            'responseModel' => 'build',
             'parameters' => [
                 'ref' => [
                     'type' => 'string',
@@ -195,6 +195,28 @@ return [
                 'pull_request' => [
                     'type' => 'string',
                     'location' => 'json'
+                ]
+            ]
+        ],
+        'cancelBuild' => [
+            'extends' => 'getProject',
+            'httpMethod' => 'DELETE',
+            'uri' => '/api/projects/{provider}%2F{repository}/builds/{buildId}',
+            'parameters' => [
+                'provider' => [
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'required' => true
+                ],
+                'repository' => [
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'required' => true
+                ],
+                'buildId' => [
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'required' => true
                 ]
             ]
         ],
