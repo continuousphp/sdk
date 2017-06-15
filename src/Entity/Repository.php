@@ -13,4 +13,12 @@ class Repository extends EntityAbstract
         $this->id = $attributes['repositoryId'];
         $this->attributes = $attributes;
     }
+
+    public function getProvider()
+    {
+        $provider = new Provider();
+        $provider->hydrate($this->attributes['_embedded']['provider']);
+
+        return $provider;
+    }
 }
