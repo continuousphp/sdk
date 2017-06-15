@@ -13,4 +13,12 @@ class Project extends EntityAbstract
         $this->id = $attributes['projectId'];
         $this->attributes = $attributes;
     }
+
+    public function getProvider()
+    {
+        $provider = new Provider();
+        $provider->hydrate($this->attributes['_embedded']['provider']);
+
+        return $provider;
+    }
 }
