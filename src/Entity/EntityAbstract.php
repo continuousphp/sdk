@@ -29,4 +29,9 @@ abstract class EntityAbstract implements EntityInterface
     {
         return $this->id;
     }
+
+    public function __toString()
+    {
+        return json_encode($this->attributes);
+    }
 }
