@@ -172,7 +172,11 @@ return [
                     'location' => 'query',
                     'enum' => ['success', 'warning', 'failed']
                 ],
-                'ref' => [
+                'pipeline_id' => [
+                    'type' => 'string',
+                    'location' => 'query'
+                ],
+                'exclude_pull_requests' => [
                     'type' => 'string',
                     'location' => 'query'
                 ]
