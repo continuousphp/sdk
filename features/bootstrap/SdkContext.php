@@ -99,6 +99,7 @@ class SdkContext implements Context, SnippetAcceptingContext
         try {
             $this->result = call_user_func([$this->sdk, $operation], $args);
         } catch (CommandClientException $e) {
+            echo "### \n", $e->getResponse()->getBody(), "###\n";
             $this->exception = $e;
         }
     }
