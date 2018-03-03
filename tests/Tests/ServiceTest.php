@@ -13,6 +13,7 @@ namespace Continuous\Tests\Sdk;
 
 use Continuous\Sdk\Service;
 use phpmock\phpunit\PHPMock;
+use PHPUnit\Framework\TestCase;
 
 /**
  * ServiceTest
@@ -21,7 +22,7 @@ use phpmock\phpunit\PHPMock;
  * @author    Frederic Dewinne <frederic@continuousphp.com>
  * @license   http://opensource.org/licenses/Apache-2.0 Apache License, Version 2.0
  */
-class ServiceTest extends \PHPUnit_Framework_TestCase
+class ServiceTest extends TestCase
 {
     use PHPMock;
     
@@ -32,9 +33,9 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
     
     public function setUp()
     {
-        $this->httpClientMock = $this->getMock('GuzzleHttp\ClientInterface');
+        $this->httpClientMock = $this->createMock('GuzzleHttp\ClientInterface');
         $this->originalHttpClientClass = Service::getHttpClientClass();
-        $this->descriptionMock = $this->getMock('GuzzleHttp\Command\Guzzle\DescriptionInterface');
+        $this->descriptionMock = $this->createMock('GuzzleHttp\Command\Guzzle\DescriptionInterface');
         $this->originalDescriptionClass = Service::getDescriptionClass();
     }
     
@@ -55,7 +56,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
     
     public function testHttpClientClassSetterThrowsExceptionOnBadClassnameProvided()
     {
-        $this->setExpectedException("InvalidArgumentException");
+        $this->expectException("InvalidArgumentException");
         Service::setHttpClientClass("stdClass");
     }
     
@@ -112,7 +113,7 @@ class ServiceTest extends \PHPUnit_Framework_TestCase
     
     public function testDescriptionClassSetterThrowsExceptionOnBadClassnameProvided()
     {
-        $this->setExpectedException("InvalidArgumentException");
+        $this->expectException("InvalidArgumentException");
         Service::setDescriptionClass("stdClass");
     }
     

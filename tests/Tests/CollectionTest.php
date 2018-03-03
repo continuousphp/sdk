@@ -1,13 +1,29 @@
 <?php
-
+/**
+ * CollectionTest.php
+ *
+ * @author    Pierre Tomasina <pierre.tomasina@continuousphp.com>
+ * @copyright Copyright (c) 2018 Continuous S.A. (https://continuousphp.com)
+ * @license   http://opensource.org/licenses/Apache-2.0 Apache License, Version 2.0
+ * @file      CollectionTest.php
+ * @link      http://github.com/continuousphp/sdk the canonical source repo
+ */
 namespace Continuous\Tests\Sdk;
 
 use Continuous\Fixtures\Sdk\GuzzleResult;
 use Continuous\Sdk\Collection;
 use Continuous\Sdk\Entity\Build;
 use Continuous\Sdk\Exception;
+use PHPUnit\Framework\TestCase;
 
-class CollectionTest extends \PHPUnit_Framework_TestCase
+/**
+ * CollectionTest
+ *
+ * @package   Continuous\Sdk
+ * @author    Pierre Tomasina <pierre.tomasina@continuousphp.com>
+ * @license   http://opensource.org/licenses/Apache-2.0 Apache License, Version 2.0
+ */
+class CollectionTest extends TestCase
 {
     public function testConstruct()
     {
@@ -77,7 +93,9 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     {
         $collection = new Collection(new GuzzleResult([]), 'myEntity', '\Fake\My\Entity');
 
-        $this->setExpectedException(Exception::class, 'Mutation on Collection is not authorized');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Mutation on Collection is not authorized');
+
         $collection->offsetSet('newattributeinjection', 'value');
     }
 
@@ -85,7 +103,8 @@ class CollectionTest extends \PHPUnit_Framework_TestCase
     {
         $collection = new Collection(new GuzzleResult([]), 'myEntity', '\Fake\My\Entity');
 
-        $this->setExpectedException(Exception::class, 'Mutation on Collection is not authorized');
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('Mutation on Collection is not authorized');
         $collection->offsetUnset('total_items');
     }
 

@@ -22,6 +22,7 @@ use Continuous\Sdk\Entity\Build;
 use Continuous\Sdk\Entity\EntityInterface;
 use Continuous\Sdk\Service;
 use GuzzleHttp\Command\Exception\CommandClientException;
+use PHPUnit\Framework\TestCase;
 
 /**
  * SdkContext
@@ -116,10 +117,10 @@ class SdkContext implements Context, SnippetAcceptingContext
             $type .= 's';
         }
 
-        \PHPUnit_Framework_Assert::assertInstanceOf(Collection::class, $this->result);
-        \PHPUnit_Framework_Assert::assertEquals($type, $this->result->getEntityType());
-        \PHPUnit_Framework_Assert::assertArrayHasKey('_embedded', $this->result);
-        \PHPUnit_Framework_Assert::assertArrayHasKey($type, $this->result['_embedded']);
+        TestCase::assertInstanceOf(Collection::class, $this->result);
+        TestCase::assertEquals($type, $this->result->getEntityType());
+        TestCase::assertArrayHasKey('_embedded', $this->result);
+        TestCase::assertArrayHasKey($type, $this->result['_embedded']);
     }
 
     /**
@@ -134,8 +135,8 @@ class SdkContext implements Context, SnippetAcceptingContext
             throw $this->exception;
         }
 
-        \PHPUnit_Framework_Assert::assertInstanceOf(EntityInterface::class, $this->result);
-        \PHPUnit_Framework_Assert::assertTrue($this->result->has($type . 'Id'));
+        TestCase::assertInstanceOf(EntityInterface::class, $this->result);
+        TestCase::assertTrue($this->result->has($type . 'Id'));
     }
     
     /**
@@ -144,23 +145,23 @@ class SdkContext implements Context, SnippetAcceptingContext
     public function theResponseShouldContainA($key)
     {
         if ('array' === gettype($this->result)) {
-            \PHPUnit_Framework_Assert::assertInternalType('array', $this->result);
-            \PHPUnit_Framework_Assert::assertArrayHasKey($key, $this->result);
-            \PHPUnit_Framework_Assert::assertNotEmpty($this->result[$key]);
+            TestCase::assertInternalType('array', $this->result);
+            TestCase::assertArrayHasKey($key, $this->result);
+            TestCase::assertNotEmpty($this->result[$key]);
 
             return;
         }
 
         if ($this->result instanceof Collection) {
-            \PHPUnit_Framework_Assert::assertArrayHasKey($key, $this->result);
-            \PHPUnit_Framework_Assert::assertNotEmpty($this->result[$key]);
+            TestCase::assertArrayHasKey($key, $this->result);
+            TestCase::assertNotEmpty($this->result[$key]);
 
             return;
         }
 
         if ($this->result instanceof EntityInterface) {
-            \PHPUnit_Framework_Assert::assertTrue($this->result->has($key));
-            \PHPUnit_Framework_Assert::assertNotEmpty($this->result->get($key));
+            TestCase::assertTrue($this->result->has($key));
+            TestCase::assertNotEmpty($this->result->get($key));
 
             return;
         }
@@ -173,7 +174,7 @@ class SdkContext implements Context, SnippetAcceptingContext
      */
     public function theFileShouldExists($key)
     {
-        \PHPUnit_Framework_Assert::assertFileExists($this->result[$key]);
+        TestCase::assertFileExists($this->result[$key]);
         unlink($this->result[$key]);
     }
 }
