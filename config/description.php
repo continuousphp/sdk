@@ -274,7 +274,7 @@ return [
         'pipelineCollection' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'cphp-setting'
+                'location' => 'cphp-pipeline'
             ]
         ],
         'buildCollection' => [
@@ -298,7 +298,7 @@ return [
         'pipeline' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'cphp-setting'
+                'location' => 'cphp-pipeline'
             ]
         ],
         'package' => [
