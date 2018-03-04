@@ -57,6 +57,11 @@ class PipelineExportDecorator implements ExportDecoratorInterface
             $sanitizer['deployments'] = $deployments;
         }
 
+        $notifications = $this->getNotifications();
+        if (false === empty($notifications)) {
+            $sanitizer['notifications'] = $notifications;
+        }
+
         $sanitizer['pipelines'] = $this->getYamlPipeline();
 
         return Yaml::dump($sanitizer, 8, 2, Yaml::DUMP_MULTI_LINE_LITERAL_BLOCK);
@@ -146,22 +151,6 @@ class PipelineExportDecorator implements ExportDecoratorInterface
         return $package;
     }
 
-    protected function getDeployments()
-    {
-        $deployment = $this->pipeline->get('deployment');
-        $typeCaller = 'getDeployment' . ucfirst(strtolower($deployment['type']));
-
-        if (!method_exists($this, $typeCaller)) {
-            file_put_contents(
-                'php://stderr',
-                sprintf("\nThe deployment type %s is not yet supported in Yaml. Please open an issue on ContinuousPHP/SDK\n", $deployment['type'])
-            );
-            return null;
-        }
-
-        return array_map([static::class, $typeCaller], $deployment['destinations']);
-    }
-
     protected function getTests()
     {
         if (true === empty($this->pipeline->get('enabledTests'))) {
@@ -186,6 +175,51 @@ class PipelineExportDecorator implements ExportDecoratorInterface
         }
 
         return $tests;
+    }
+
+    protected function getDeployments()
+    {
+        $deployment = $this->pipeline->get('deployment');
+        $typeCaller = 'getDeployment' . ucfirst(strtolower($deployment['type']));
+
+        if (!method_exists($this, $typeCaller)) {
+            file_put_contents(
+                'php://stderr',
+                sprintf("\nThe deployment type %s is not yet supported in Yaml. Please open an issue on ContinuousPHP/SDK\n", $deployment['type'])
+            );
+            return null;
+        }
+
+        return array_map([static::class, $typeCaller], $deployment['destinations']);
+    }
+
+    protected function getNotifications()
+    {
+        if (true === empty($this->pipeline->get('notificationHooks'))) {
+            return [];
+        }
+
+        $notifications = [];
+
+        foreach ($this->pipeline->get('notificationHooks') as $notif) {
+            $type = $notif['type'];
+            $typeCaller = 'getNotif' . ucfirst(strtolower($type));
+
+            if (!method_exists($this, $typeCaller)) {
+                file_put_contents(
+                    'php://stderr',
+                    sprintf("\nThe notification type %s is not yet supported in Yaml. Please open an issue on ContinuousPHP/SDK\n", $type)
+                );
+                continue;
+            }
+
+            $notifications[] = [
+                'type' => $type,
+                'events' => array_map([static::class, 'mapNotificationEvents'], array_keys($notif['events'])),
+            ] + call_user_func([$this, $typeCaller], $notif);
+        }
+
+        return $notifications;
     }
 
     protected function getYamlPipeline()
@@ -269,6 +303,13 @@ class PipelineExportDecorator implements ExportDecoratorInterface
         return $behat;
     }
 
+    protected static function getNotifSlack($notif)
+    {
+        return [
+            'webhook' => $notif['url'],
+        ];
+    }
+
     /**
      * Map the common properties for test configuration into Yaml array
      *
@@ -327,5 +368,24 @@ class PipelineExportDecorator implements ExportDecoratorInterface
         }
 
         return $setVar;
+    }
+
+    protected static function mapNotificationEvents($event)
+    {
+        switch ($event) {
+            case 'createBuild':
+                return 'start';
+
+            case 'buildSuccess':
+                return 'success';
+
+            case 'buildFail':
+                return 'failure';
+
+            case 'buildDeployed':
+                return 'deployed';
+        }
+
+        return null;
     }
 }
