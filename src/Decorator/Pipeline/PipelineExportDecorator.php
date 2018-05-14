@@ -10,6 +10,7 @@
  */
 
 namespace Continuous\Sdk\Decorator\Pipeline;
+
 use Continuous\Sdk\Decorator\ExportDecoratorInterface;
 use Continuous\Sdk\Entity\Pipeline;
 use Symfony\Component\Yaml\Yaml;
@@ -69,7 +70,7 @@ class PipelineExportDecorator implements ExportDecoratorInterface
 
     protected function getPhpVersions()
     {
-        return array_map(function($version) {
+        return array_map(function ($version) {
             return 'php:' . $version;
         }, $this->pipeline->get('phpVersions'));
     }
@@ -113,7 +114,9 @@ class PipelineExportDecorator implements ExportDecoratorInterface
         }
 
         if (false === empty($this->pipeline->get('prepareEnvironmentVariables'))) {
-            $test['variables'] = array_map([static::class, 'mapEnvVariable'], $this->pipeline->get('prepareEnvironmentVariables'));
+            $test['variables'] = array_map([
+                static::class, 'mapEnvVariable'
+            ], $this->pipeline->get('prepareEnvironmentVariables'));
         }
 
         if ($this->pipeline->get('composerPath') && $this->pipeline->get('runComposerHooksInPackage')) {
@@ -135,7 +138,9 @@ class PipelineExportDecorator implements ExportDecoratorInterface
         }
 
         if (false === empty($this->pipeline->get('preDeployEnvironmentVariables'))) {
-            $dist['variables'] = array_map([static::class, 'mapEnvVariable'], $this->pipeline->get('preDeployEnvironmentVariables'));
+            $dist['variables'] = array_map([
+                static::class, 'mapEnvVariable'
+            ], $this->pipeline->get('preDeployEnvironmentVariables'));
         }
 
         $package = [];
@@ -166,7 +171,8 @@ class PipelineExportDecorator implements ExportDecoratorInterface
             if (!method_exists($this, $typeCaller)) {
                 file_put_contents(
                     'php://stderr',
-                    sprintf("\nThe test type %s is not yet supported in Yaml. Please open an issue on ContinuousPHP/SDK\n", $type)
+                    sprintf("\nThe test type %s is not yet supported in Yaml. 
+                    Please open an issue on ContinuousPHP/SDK\n", $type)
                 );
                 continue;
             }
@@ -185,7 +191,8 @@ class PipelineExportDecorator implements ExportDecoratorInterface
         if (!method_exists($this, $typeCaller)) {
             file_put_contents(
                 'php://stderr',
-                sprintf("\nThe deployment type %s is not yet supported in Yaml. Please open an issue on ContinuousPHP/SDK\n", $deployment['type'])
+                sprintf("\nThe deployment type %s is not yet supported in Yaml. 
+                Please open an issue on ContinuousPHP/SDK\n", $deployment['type'])
             );
             return null;
         }
@@ -208,7 +215,8 @@ class PipelineExportDecorator implements ExportDecoratorInterface
             if (!method_exists($this, $typeCaller)) {
                 file_put_contents(
                     'php://stderr',
-                    sprintf("\nThe notification type %s is not yet supported in Yaml. Please open an issue on ContinuousPHP/SDK\n", $type)
+                    sprintf("\nThe notification type %s is not yet supported in Yaml. 
+                    Please open an issue on ContinuousPHP/SDK\n", $type)
                 );
                 continue;
             }
