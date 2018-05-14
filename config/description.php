@@ -160,19 +160,23 @@ return [
         'getBuilds' => [
             'extends' => 'getProject',
             'uri' => '/api/projects/{provider}%2F{repository}/builds',
-            'responseModel' => 'buildCollection',
+            'responseClass' => 'buildCollection',
             'parameters' => [
                 'state' => [
                     'type' => 'array',
                     'location' => 'query',
-                    'enum' => ['in-progress', 'complete', 'timeout']
+                    'enum' => \Continuous\Sdk\Entity\Build::STATE
                 ],
                 'result' => [
                     'type' => 'array',
                     'location' => 'query',
-                    'enum' => ['success', 'warning', 'failed']
+                    'enum' => \Continuous\Sdk\Entity\Build::RESULT
                 ],
-                'ref' => [
+                'pipeline_id' => [
+                    'type' => 'string',
+                    'location' => 'query'
+                ],
+                'exclude_pull_requests' => [
                     'type' => 'string',
                     'location' => 'query'
                 ]
@@ -182,7 +186,7 @@ return [
             'extends' => 'getProject',
             'httpMethod' => 'POST',
             'uri' => '/api/projects/{provider}%2F{repository}/builds',
-            'responseModel' => 'buildCollection',
+            'responseModel' => 'build',
             'parameters' => [
                 'ref' => [
                     'type' => 'string',
@@ -191,6 +195,29 @@ return [
                 'pull_request' => [
                     'type' => 'string',
                     'location' => 'json'
+                ]
+            ]
+        ],
+        'cancelBuild' => [
+            'extends' => 'getProject',
+            'httpMethod' => 'DELETE',
+            'uri' => '/api/projects/{provider}%2F{repository}/builds/{buildId}',
+            'responseModel' => 'statusCode',
+            'parameters' => [
+                'provider' => [
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'required' => true
+                ],
+                'repository' => [
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'required' => true
+                ],
+                'buildId' => [
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'required' => true
                 ]
             ]
         ],
@@ -209,7 +236,7 @@ return [
         'getPackage' => [
             'extends' => 'getBuild',
             'uri' => '/api/projects/{provider}%2F{repository}/builds/{buildId}/packages/{packageType}',
-            'responseModel' => 'build',
+            'responseModel' => 'package',
             'parameters' => [
                 'packageType' => [
                     'type' => 'string',
@@ -220,58 +247,64 @@ return [
         ]
     ],
     'models' => [
+        'statusCode' => [
+            'type' => 'object',
+            'additionalProperties' => [
+                'location' => 'statusCode',
+            ]
+        ],
         'companyCollection' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-company',
             ]
         ],
         'repositoryCollection' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-repository'
             ]
         ],
         'projectCollection' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-project'
             ]
         ],
         'pipelineCollection' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-setting'
             ]
         ],
         'buildCollection' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-build',
             ]
         ],
         'project' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-project'
             ]
         ],
         'build' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-build',
             ]
         ],
         'pipeline' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-setting'
             ]
         ],
         'package' => [
             'type' => 'object',
             'additionalProperties' => [
-                'location' => 'json'
+                'location' => 'cphp-package'
             ]
         ],
     ]

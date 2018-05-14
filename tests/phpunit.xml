@@ -1,15 +1,15 @@
 <phpunit backupGlobals="false"
-         bootstrap="./vendor/autoload.php"
+         bootstrap="../vendor/autoload.php"
          cacheTokens="true"
          colors="true">
     <testsuites>
         <testsuite name="SDK test suite">
-            <directory>tests</directory>
+            <directory>Tests</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">src</directory>
+            <directory suffix=".php">../src</directory>
         </whitelist>
     </filter>
 </phpunit>

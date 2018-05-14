@@ -12,6 +12,13 @@
 namespace Continuous\Sdk;
 
 use Continuous\Sdk\Client as ContinuousClient;
+use Continuous\Sdk\Entity\Build;
+use Continuous\Sdk\Entity\Company;
+use Continuous\Sdk\Entity\Package;
+use Continuous\Sdk\Entity\Pipeline;
+use Continuous\Sdk\Entity\Project;
+use Continuous\Sdk\Entity\Repository;
+use Continuous\Sdk\ResponseLocation\HalLocation;
 
 /**
  * Service
@@ -65,19 +72,17 @@ class Service
         $className = self::getHttpClientClass();
         
         $args = [
-            'defaults' => [
-                'headers' => [
-                    'Accept' => 'application/hal+json'
-                ]
-            ]
+            'headers' => [
+                'Accept' => 'application/hal+json'
+            ],
         ];
         
         if (isset($config['token'])) {
-            $args['defaults']['headers']['Authorization'] = "Bearer " . $config['token'];
+            $args['headers']['Authorization'] = "Bearer " . $config['token'];
         } elseif ($token = getenv('CPHP_TOKEN')) {
-            $args['defaults']['headers']['Authorization'] = "Bearer " . $token;
+            $args['headers']['Authorization'] = "Bearer " . $token;
         }
-        
+
         return new $className($args);
     }
 
@@ -122,6 +127,24 @@ class Service
      */
     public static function factory(array $config = [])
     {
-        return new ContinuousClient(self::getHttpClient($config), self::getDescription());
+        $locations = [
+            'response_locations' => [
+                'cphp-build' => new HalLocation('cphp-build', Build::class),
+                'cphp-company' => new HalLocation('cphp-company', Company::class),
+                'cphp-project' => new HalLocation('cphp-project', Project::class),
+                'cphp-setting' => new HalLocation('cphp-setting', Pipeline::class),
+                'cphp-repository' => new HalLocation('cphp-repository', Repository::class),
+                'cphp-package' => new HalLocation('cphp-package', Package::class),
+            ]
+        ];
+
+        return new ContinuousClient(
+            self::getHttpClient($config),
+            self::getDescription(),
+            null,
+            null,
+            null,
+            $locations
+        );
     }
 }

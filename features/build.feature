@@ -9,7 +9,7 @@ Feature: continuousphp build
       | provider | git-hub |
       | repository | continuousphp/sdk |
     Then The response should be a "build" collection
-    
+
   Scenario: Get a specific build
     Given I've instatiated the sdk with the following
       | token | b52f9c7faf680988f88391b35e5e488883442036 |
@@ -18,7 +18,7 @@ Feature: continuousphp build
       | repository | continuousphp/sdk |
       | buildId | a6b9301c-6aed-4921-9f59-a9fac2602148 |
     Then The response should be a "build" resource
-    
+
   Scenario: Create a new build
     Given I've instatiated the sdk with the following
       | token | b52f9c7faf680988f88391b35e5e488883442036 |
@@ -27,7 +27,7 @@ Feature: continuousphp build
       | repository | fdewinnetest/sdk |
       | ref        | refs/heads/master |
     Then The response should be a "build" resource
-    
+
   Scenario: Get a download url for a specific build
     Given I've instatiated the sdk with the following
       | token | b52f9c7faf680988f88391b35e5e488883442036 |
@@ -36,8 +36,9 @@ Feature: continuousphp build
       | repository | continuousphp/sdk |
       | buildId | a6b9301c-6aed-4921-9f59-a9fac2602148 |
       | packageType | deploy |
-    Then The response should contain a "url"  
-    
+    Then The response should contain a "url"
+
+  @debugguzzle6
   Scenario: Download a specific build package
     Given I've instatiated the sdk with the following
       | token | b52f9c7faf680988f88391b35e5e488883442036 |

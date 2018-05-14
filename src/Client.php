@@ -11,8 +11,8 @@
 
 namespace Continuous\Sdk;
 
+use Continuous\Sdk\Entity\Package;
 use GuzzleHttp\Command\Guzzle\GuzzleClient;
-use GuzzleHttp\Stream\Stream;
 
 /**
  * Service
@@ -27,8 +27,9 @@ use GuzzleHttp\Stream\Stream;
  * @method    array getPipelines(array $args = array())
  * @method    array putPipeline(array $args = array())
  * @method    array getBuilds(array $args = array())
- * @method    array startBuild(array $args = array())
- * @method    array getBuild(array $args = array())
+ * @method    \Continuous\Sdk\Entity\Build startBuild(array $args = array())
+ * @method    \Continuous\Sdk\Entity\Build getBuild(array $args = array())
+ * @method    array cancelBuild(array $args = array())
  * @method    array getPackage(array $args = array())
  */
 class Client extends GuzzleClient
@@ -46,7 +47,7 @@ class Client extends GuzzleClient
             )
         );
     }
-    
+
     /**
      * @param array $args
      * @return array
@@ -59,9 +60,10 @@ class Client extends GuzzleClient
         $destination = $args['destination'];
         
         unset($args['destination']);
+        /** @var Package $package */
         $package = $this->getPackage($args);
-        
-        $url = $package['url'];
+
+        $url = $package->get('url');
         $path = $destination . '/' . pathinfo(parse_url($url, PHP_URL_PATH), PATHINFO_BASENAME);
         
         $fp = fopen($path, 'w+');
