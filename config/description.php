@@ -58,7 +58,11 @@ return [
                     'type' => 'string',
                     'location' => 'uri',
                     'required' => true
-                ]
+                ],
+                'page_size' => [
+                    'type' => 'integer',
+                    'location' => 'query'
+                ],
             ]
         ],
         'getPipelines' => [
@@ -165,12 +169,12 @@ return [
                 'state' => [
                     'type' => 'array',
                     'location' => 'query',
-                    'enum' => \Continuous\Sdk\Entity\Build::STATE
+                    'enum' => \Continuous\Sdk\Entity\Build::STATES
                 ],
                 'result' => [
                     'type' => 'array',
                     'location' => 'query',
-                    'enum' => \Continuous\Sdk\Entity\Build::RESULT
+                    'enum' => \Continuous\Sdk\Entity\Build::RESULTS
                 ],
                 'pipeline_id' => [
                     'type' => 'string',
@@ -179,7 +183,11 @@ return [
                 'exclude_pull_requests' => [
                     'type' => 'string',
                     'location' => 'query'
-                ]
+                ],
+                'pull_request_id' => [
+                    'type' => 'integer',
+                    'location' => 'query'
+                ],
             ]
         ],
         'startBuild' => [

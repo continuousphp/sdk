@@ -8,8 +8,8 @@ namespace Continuous\Sdk\Entity;
  */
 class Build extends EntityAbstract
 {
-    const STATE = ['in-progress', 'complete', 'timeout', 'canceled'];
-    const RESULT = ['success', 'warning', 'failed'];
+    const STATES = ['in-progress', 'complete', 'timeout', 'canceled'];
+    const RESULTS = ['success', 'warning', 'failed'];
 
     public function hydrate(array $attributes)
     {
