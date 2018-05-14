@@ -23,7 +23,7 @@
   },
   "require": {
     "php": ">=7.1.0",
-    "pierozi/guzzle-services": "~1.1.0",
+    "continuousphp/guzzle-services": "^1.1",
     "symfony/yaml": "~4.0.0"
   },
   "autoload": {
@@ -41,7 +41,7 @@
   "repositories": [
     {
       "type": "vcs",
-      "url": "https://github.com/Pierozi/guzzle-services.git"
+      "url": "https://github.com/continuousphp/guzzle-services.git"
     }
   ]
 }
