@@ -254,8 +254,9 @@ return [
             ]
         ],
         'resetWebHooks' => [
+            'extends' => 'getProject',
             'httpMethod' => 'PUT',
-            'uri' => '/api/projects/{provider}/{repository}/hooks/web',
+            'uri' => '/api/projects/{provider}%2F{repository}/hooks/web',
             'responseModel' => 'webhooks',
         ],
     ],
