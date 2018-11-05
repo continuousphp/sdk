@@ -252,7 +252,12 @@ return [
                     'required' => true
                 ]
             ]
-        ]
+        ],
+        'resetWebHooks' => [
+            'httpMethod' => 'PUT',
+            'uri' => '/api/projects/{provider}%2F{repository}/hooks/web',
+            'responseModel' => 'webhooks',
+        ],
     ],
     'models' => [
         'statusCode' => [
@@ -313,6 +318,12 @@ return [
             'type' => 'object',
             'additionalProperties' => [
                 'location' => 'cphp-package'
+            ]
+        ],
+        'webhooks' => [
+            'type' => 'object',
+            'additionalProperties' => [
+                'location' => 'cphp-webhooks'
             ]
         ],
     ]

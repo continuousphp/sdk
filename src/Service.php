@@ -18,6 +18,7 @@ use Continuous\Sdk\Entity\Package;
 use Continuous\Sdk\Entity\Pipeline;
 use Continuous\Sdk\Entity\Project;
 use Continuous\Sdk\Entity\Repository;
+use Continuous\Sdk\Entity\WebHooks;
 use Continuous\Sdk\ResponseLocation\HalLocation;
 
 /**
@@ -135,6 +136,7 @@ class Service
                 'cphp-setting' => new HalLocation('cphp-setting', Pipeline::class),
                 'cphp-repository' => new HalLocation('cphp-repository', Repository::class),
                 'cphp-package' => new HalLocation('cphp-package', Package::class),
+                'cphp-webhooks' => new HalLocation('cphp-webhooks', WebHooks::class),
             ]
         ];
 
