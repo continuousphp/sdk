@@ -29,6 +29,7 @@ use GuzzleHttp\Command\Guzzle\GuzzleClient;
  * @method    array getBuilds(array $args = array())
  * @method    \Continuous\Sdk\Entity\Build startBuild(array $args = array())
  * @method    \Continuous\Sdk\Entity\Build getBuild(array $args = array())
+ * @method    \Continuous\Sdk\Entity\WebHooks resetWebHooks(array $args = array())
  * @method    array cancelBuild(array $args = array())
  * @method    array getPackage(array $args = array())
  */
