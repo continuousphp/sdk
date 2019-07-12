@@ -2,6 +2,23 @@
 return [
     'baseUrl' => 'https://api.continuousphp.com/',
     'operations' => [
+        'getReferences' => [
+            'httpMethod' => 'GET',
+            'uri' => '/api/repositories/{provider}%2F{repository}/references',
+            'responseModel' => 'referenceCollection',
+            'parameters' => [
+                'provider' => [
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'required' => true
+                ],
+                'repository' => [
+                    'type' => 'string',
+                    'location' => 'uri',
+                    'required' => true
+                ],
+            ],
+        ],
         'getCompanies' => [
             'httpMethod' => 'GET',
             'uri' => '/api/companies',
@@ -273,6 +290,12 @@ return [
                 'location' => 'cphp-company',
             ]
         ],
+        'referenceCollection' => [
+            'type' => 'object',
+            'additionalProperties' => [
+                'location' => 'cphp-reference',
+            ]
+         ],
         'repositoryCollection' => [
             'type' => 'object',
             'additionalProperties' => [
@@ -327,5 +350,11 @@ return [
                 'location' => 'cphp-webhooks'
             ]
         ],
+        'reference' => [
+            'type' => 'object',
+            'additionalProperties' => [
+                'location' => 'cphp-reference'
+            ]
+        ]
     ]
 ];
