@@ -34,7 +34,7 @@ class Service
      * @var string
      */
     protected static $httpClientClass;
-    
+
     /**
      * @var string
      */
@@ -48,7 +48,7 @@ class Service
         if (empty(self::$httpClientClass)) {
             self::setHttpClientClass('GuzzleHttp\Client');
         }
-        
+
         return self::$httpClientClass;
     }
 
@@ -60,10 +60,10 @@ class Service
         if (!in_array('GuzzleHttp\ClientInterface', class_implements($httpClientClass))) {
             throw new \InvalidArgumentException("$httpClientClass does not implement GuzzleHttp\\ClientInterface");
         }
-        
+
         self::$httpClientClass = $httpClientClass;
     }
-    
+
     /**
      * @param array $config
      * @return \GuzzleHttp\ClientInterface
@@ -71,13 +71,13 @@ class Service
     public static function getHttpClient(array $config = array())
     {
         $className = self::getHttpClientClass();
-        
+
         $args = [
             'headers' => [
                 'Accept' => 'application/hal+json'
             ],
         ];
-        
+
         if (isset($config['token'])) {
             $args['headers']['Authorization'] = "Bearer " . $config['token'];
         } elseif ($token = getenv('CPHP_TOKEN')) {
@@ -95,7 +95,7 @@ class Service
         if (empty(self::$descriptionClass)) {
             self::setDescriptionClass('GuzzleHttp\Command\Guzzle\Description');
         }
-        
+
         return self::$descriptionClass;
     }
 
@@ -108,20 +108,20 @@ class Service
             $message = "$descriptionClass does not implement GuzzleHttp\\Command\\Guzzle\\DescriptionInterface";
             throw new \InvalidArgumentException($message);
         }
-        
+
         self::$descriptionClass = $descriptionClass;
     }
-    
+
     /**
      * @return \GuzzleHttp\Command\Guzzle\DescriptionInterface
      */
     public static function getDescription()
     {
         $className = self::getDescriptionClass();
-        
+
         return new $className(include __DIR__ . '/../config/description.php');
     }
-    
+
     /**
      * @param array $config
      * @return ContinuousClient
@@ -137,6 +137,7 @@ class Service
                 'cphp-repository' => new HalLocation('cphp-repository', Repository::class),
                 'cphp-package' => new HalLocation('cphp-package', Package::class),
                 'cphp-webhooks' => new HalLocation('cphp-webhooks', WebHooks::class),
+                'cphp-reference' => new HalLocation('cphp-reference', Reference::class)
             ]
         ];
 
