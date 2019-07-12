@@ -13,5 +13,4 @@ class Reference extends EntityAbstract
         $this->id = $attributes['referenceId'];
         $this->attributes = $attributes;
     }
-
 }
