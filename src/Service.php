@@ -19,6 +19,7 @@ use Continuous\Sdk\Entity\Pipeline;
 use Continuous\Sdk\Entity\Project;
 use Continuous\Sdk\Entity\Repository;
 use Continuous\Sdk\Entity\WebHooks;
+use Continuous\Sdk\Entity\Reference;
 use Continuous\Sdk\ResponseLocation\HalLocation;
 
 /**
