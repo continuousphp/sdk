@@ -18,7 +18,6 @@ use Behat\Gherkin\Node\PyStringNode;
 use Behat\Gherkin\Node\TableNode;
 use Continuous\Sdk\Client;
 use Continuous\Sdk\Collection;
-use Continuous\Sdk\Entity\Build;
 use Continuous\Sdk\Entity\EntityInterface;
 use Continuous\Sdk\Service;
 use GuzzleHttp\Command\Exception\CommandClientException;
@@ -37,12 +36,12 @@ class SdkContext implements Context, SnippetAcceptingContext
      * @var Client
      */
     protected $sdk;
-    
+
     protected $result;
-    
+
     /** @var CommandClientException */
     protected $exception;
-    
+
     /**
      * Initializes context.
      *
@@ -53,7 +52,7 @@ class SdkContext implements Context, SnippetAcceptingContext
     public function __construct()
     {
     }
-    
+
     /**
      * @Given I've instatiated the sdk with the following
      */
@@ -139,7 +138,7 @@ class SdkContext implements Context, SnippetAcceptingContext
         TestCase::assertInstanceOf(EntityInterface::class, $this->result);
         TestCase::assertTrue($this->result->has($type . 'Id'));
     }
-    
+
     /**
      * @Then The response should contain a :key
      */
@@ -169,7 +168,7 @@ class SdkContext implements Context, SnippetAcceptingContext
 
         throw new \Exception('result must be array or object instance of entity or collection');
     }
-    
+
     /**
      * @Then The :key file should exists
      */
