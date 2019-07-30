@@ -116,18 +116,24 @@ class Service
     /**
      * @return \GuzzleHttp\Command\Guzzle\DescriptionInterface
      */
-    public static function getDescription()
+    public static function getDescription($baseUrl = null)
     {
         $className = self::getDescriptionClass();
+        $description = include __DIR__ . '/../config/description.php';
 
-        return new $className(include __DIR__ . '/../config/description.php');
+        if ($baseUrl) {
+            $description['baseUrl'] = $baseUrl;
+        }
+
+        return new $className($description);
     }
 
     /**
      * @param array $config
+     * @param string $baseUrl the API Url that override description configuration
      * @return ContinuousClient
      */
-    public static function factory(array $config = [])
+    public static function factory(array $config = [], $baseUrl = null)
     {
         $locations = [
             'response_locations' => [
@@ -144,7 +150,7 @@ class Service
 
         return new ContinuousClient(
             self::getHttpClient($config),
-            self::getDescription(),
+            self::getDescription($baseUrl),
             null,
             null,
             null,
